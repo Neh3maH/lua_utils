@@ -2,12 +2,12 @@ local types = require 'types'
 
 local module = {}
 
-function module.rm(path)
+function module.delete(path)
 	assert(types.is.str(path) and path ~= "", "rm invalid path")
 	return os.execute("rm -rf " .. path)
 end
 
-function module.mkdir(path)
+function module.makeDir(path)
 	assert(types.is.str(path) and path ~= "", "mkdir invalid path")
 	return os.execute("mkdir -p " .. path)
 end

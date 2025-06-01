@@ -10,7 +10,7 @@ end
 
 lib.collections = require 'collections'
 lib.types = require 'types'
-lib.path = require 'path'
+lib.fs = fs or require 'fs'
 lib.misc = misc
 
 package.path = old_path
