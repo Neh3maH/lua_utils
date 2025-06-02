@@ -1,4 +1,4 @@
-local utils = require 'misc'
+local utils = require 'utils/misc'
 local module = {}
 
 local function add_fun(name, fun)
