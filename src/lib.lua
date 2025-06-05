@@ -13,24 +13,26 @@ function module.mk_searcher(lib, pwd)
 	end
 end
 
-module.Module = { name = nil, deps = {}, init = nil}
+module.Module = { name = nil, deps = {}, init = nil }
 
 function module.Module:new(name, deps, init)
 	local new = { name = name, deps = deps, init = init }
 	setmetatable(new, self)
 	self.__index = self
+	return new
 end
 
-function module.Module:ld()
-	for k, _ in pairs(package.loaded) do
-		if self.name == k then
-			local ret = require tostring(self.name);
-			return ret
-		end
+function module.Module:ld(pwd)
+	package.path = pwd .. '/libs/?/lib.lua;' .. package.path
+	if '.' == path then
+		package.searchers[#package.searchers + 1] = module.mk_searcher(self.name, pwd)
 	end
-
-	return function(pwd)
-		package.searchers[#package.searchers + 1] = mk_searcher(self.name, pwd)
+	local p = pwd .. '/libs/'
+	for _, dep in pairs(self.deps) do
+		local path = p .. dep
+		package.searchers[#package.searchers + 1] = module.mk_searcher(dep, path)
+		local pack = require(path .. '/deps')
+		pack:ld(path)
 	end
 end
 
