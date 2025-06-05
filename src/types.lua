@@ -29,4 +29,13 @@ add_type('fun', 'function')
 add_type('udat', 'userdata')
 add_type('thread', 'thread')
 
+module.ref_types = {}
+for _, v in ipairs({ module.tbl, module.fun, module.udat, module.thread }) do
+	module.ref_types[v] = true
+end
+
+function module.is.ref(v)
+	return module.ref_types[type(v)] or false
+end
+
 return module
